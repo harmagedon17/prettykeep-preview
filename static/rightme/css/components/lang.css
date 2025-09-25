@@ -1,0 +1,152 @@
+/* ===== Language Popover - Styles ===== */
+.lang-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;     /* 바깥 클릭 감지용 */
+  z-index: 2000;
+  display: none;
+}
+.lang-overlay.is-open { display: block; }
+
+.lang-popover {
+  position: fixed;              /* JS가 좌표 배치 (모바일은 전체 화면) */
+  min-width: 220px;
+  max-height: 60vh;
+  overflow: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.95);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 50px rgba(0,0,0,.15);
+  animation: lang-pop-in .16s ease-out;
+}
+
+/* 팝오버 진입 모션 */
+@keyframes lang-pop-in {
+  from { opacity: 0; transform: translateY(-6px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 데스크탑/태블릿 caret */
+.lang-popover::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 18px;
+  width: 12px; height: 12px; transform: rotate(45deg);
+  background: inherit;
+  border-left: 1px solid rgba(0,0,0,.08);
+  border-top: 1px solid rgba(0,0,0,.08);
+  -webkit-backdrop-filter: inherit; backdrop-filter: inherit;
+}
+
+/* 목록 */
+.lang-list {
+  margin: 6px;
+  padding: 6px;
+  list-style: none;
+}
+.lang-item {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 12px 14px;
+  border: 0; background: transparent;
+  border-radius: 10px; cursor: pointer;
+  font: inherit; color: #111;
+}
+/* hover 시 회색 */
+.lang-item:hover { background: rgba(0,0,0,.06); }
+/* 선택된 언어: 굵은 글씨만, 배경 없음 */
+.lang-item[aria-checked="true"] {
+  background: transparent;
+  font-weight: 700;
+}
+
+/* 국기(이모지) */
+.lang-flag { font-size: 18px; line-height: 1; }
+
+/* ===== Language Button (label only) =====
+   - 아이콘 span 제거에 맞춰 min-width 없앰 */
+#langBtn{
+  white-space: nowrap;
+  min-width: 0;            /* 고정폭 제거 */
+  max-width: 100%;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;                /* 아이콘이 없어도 균형 유지 */
+  overflow: hidden;        /* 혹시 긴 라벨 보호 */
+  text-overflow: ellipsis;
+}
+.langbtn-label { display: inline-block; }
+
+/* ===== 반응형 ===== */
+
+/* Tablet (641–1023px): 중앙 정렬 팝오버 */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .lang-popover { min-width: 320px; }
+}
+
+/* Mobile (≤640px): 전체 화면 모달 */
+@media (max-width: 640px) {
+  /* 배경 dim 처리 */
+  .lang-overlay.is-open { background: rgba(0,0,0,.35); }
+
+  /* 팝오버 전체화면 */
+  .lang-popover {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none;
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+    background: #fff;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    display: flex; flex-direction: column;
+    animation: none;
+  }
+  .lang-popover::after { display: none; }
+
+  /* 모바일 전용 헤더 */
+  .lang-header {
+    position: sticky; top: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid #eee;
+    background: #fff; z-index: 1;
+  }
+  .lang-header .title { font-weight: 700; font-size: 16px; }
+  .lang-header .close {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    width: 36px; height: 36px; border: 0;
+    border-radius: 10px; background: #f4f4f4;
+    font-size: 20px; line-height: 36px;
+    cursor: pointer;
+  }
+
+  /* 리스트 */
+  .lang-list {
+    margin: 0; padding: 10px 12px 20px;
+    overflow: auto; flex: 1;
+  }
+
+  /* 버튼 여백/폰트 약간 축소 */
+  #langBtn{
+    padding: 6px 10px;
+    gap: 4px;
+  }
+  .langbtn-label{ font-size: .72rem; }
+}
+
+/* PC/Tablet: lang-header 숨김 */
+@media (min-width: 641px) {
+  .lang-header { display: none !important; }
+}
+
+/* 모션 최소화 환경 배려 */
+@media (prefers-reduced-motion: reduce) {
+  .lang-popover { animation: none; }
+}

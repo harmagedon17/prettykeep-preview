@@ -1,0 +1,216 @@
+/* =====================================
+   Same Price (중한동가) 전용 스타일
+   - 이벤트 스타일과 동일한 레이아웃/썸네일
+   - 차이점: 잘하는 항목(treat-tags) 칩 추가
+   ===================================== */
+
+/* 섹션 래퍼 */
+.sameprice-section { padding: 0 0 3rem; }
+
+/* =========================
+   GRID (PC 4 / 1200:3 / 768:2 / 480:2)
+   ========================= */
+#samePriceGrid,
+.sameprice-grid,
+.sameprice-section .card-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:1.25rem;
+}
+
+@media (max-width:1200px){
+  #samePriceGrid, .sameprice-grid, .sameprice-section .card-grid{
+    grid-template-columns:repeat(3, 1fr);
+  }
+}
+@media (max-width:768px){
+  #samePriceGrid, .sameprice-grid, .sameprice-section .card-grid{
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+/* 🔧 모바일도 2열 유지 */
+@media (max-width:480px){
+  #samePriceGrid, .sameprice-grid, .sameprice-section .card-grid{
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+/* (옵션) 아주 좁은 화면만 1열로
+@media (max-width:360px){
+  #samePriceGrid, .sameprice-grid, .sameprice-section .card-grid{
+    grid-template-columns:1fr;
+  }
+}
+*/
+
+/* =========================
+   CARD
+   ========================= */
+.sameprice-section .card{
+  overflow:hidden;
+  background:var(--card, #fff);
+  border:none;
+  box-shadow:none;
+  border-radius:0; /* 카드 본문은 플랫 */
+}
+
+/* =========================
+   THUMBNAIL (이미지)
+   - 정사각형 + 얇은 보더 + 둥근 모서리
+   ========================= */
+.sameprice-section .card-head{
+  position:relative;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid var(--thumb-border, #e6e7ea);
+  border-radius:12px;
+}
+
+/* 정사각형 비율 확보 */
+.sameprice-section .card-head::before{
+  content:"";
+  display:block;
+  width:100%;
+  padding-top:100%;
+}
+
+.sameprice-section .card-head img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  border-radius:12px; /* 썸네일 라운드와 일치 */
+}
+
+/* =========================
+   FAV (찜) 버튼
+   ========================= */
+.sameprice-section .fav-btn{
+  position:absolute;
+  top:12px;
+  right:12px;
+  border:none;
+  background:transparent;
+  padding:0;
+  cursor:pointer;
+}
+.sameprice-section .heart{
+  width:clamp(24px, 6vw, 28px);
+  height:clamp(24px, 6vw, 28px);
+  fill:transparent;
+  stroke:#999;
+  stroke-width:1;
+  transition:fill .25s ease, stroke .25s ease;
+}
+.sameprice-section .fav-btn.active .heart{
+  fill:var(--primary, #CE8892);
+  stroke:var(--primary, #CE8892);
+}
+@keyframes heart-pop{
+  0%{ transform:scale(1); }
+  30%{ transform:scale(1.3) rotate(-10deg); }
+  50%{ transform:scale(1.2) rotate(10deg); }
+  70%{ transform:scale(1.25) rotate(-6deg); }
+  100%{ transform:scale(1) rotate(0deg); }
+}
+.sameprice-section .fav-btn.animate .heart{ animation:heart-pop .45s ease; }
+
+/* =========================
+   BODY
+   ========================= */
+.sameprice-section .card-body{ padding:1rem 0; }
+.sameprice-section .card-body a{ text-decoration:none; color:inherit; }
+.sameprice-section .card-body h4{
+  margin:0 0 .25rem;
+  font-size:.9rem;
+  font-weight:700;
+}
+.sameprice-section .card-body .desc{
+  margin:0;
+  color:var(--muted, #6b7280);
+  font-size:.8rem;
+}
+
+/* =========================
+   META (별점/리뷰)
+   ========================= */
+.sameprice-section .meta{
+  list-style:none;
+  margin:.35rem 0 0;
+  padding:0;
+  display:grid;
+  gap:.2rem;
+  color:var(--muted, #6b7280);
+  font-size:.85rem;
+}
+.sameprice-section .meta li{
+  display:flex;
+  align-items:center;
+  gap:.2rem;
+  line-height:1.5;
+}
+.sameprice-section .meta li img{
+  display:block;
+  width:14px;
+  height:14px;
+}
+.sameprice-section .score{ color:var(--text, #2a2a2a); font-weight:600; }
+
+/* =========================
+   TAGS
+   ========================= */
+/* 잘하는 항목 칩(네모, 얇은 테두리) */
+.sameprice-section .treat-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.35rem .4rem;
+  margin:.25rem 0 .6rem;
+}
+.sameprice-section .treat-tags .tag{
+  display:inline-block;
+  padding:.22rem .45rem;
+  font-size:.75rem;
+  font-weight:500;
+  line-height:1;
+  white-space:nowrap;
+  color:#444;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:6px;
+}
+
+/* “중한동가” 표시 – 이벤트와 동일(프라이머리 배경) */
+.sameprice-section .clinic-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem .4rem;
+  align-items:center;
+  margin-top:.25rem;
+}
+.sameprice-section .clinic-tags .tag{
+  display:inline-flex;
+  align-items:center;
+  gap:.25rem;
+  padding: clamp(.18rem, .6vw, .25rem) clamp(.35rem, 1.2vw, .5rem);
+  font-size: clamp(.70rem, 1.8vw, .875rem);
+  font-weight:600;
+  line-height:1;
+  white-space:nowrap;
+  max-width:100%;
+}
+.sameprice-section .clinic-tags .tag--same{
+  background:var(--primary, #CE8892);
+  color:#fff;
+  border:1px solid var(--primary, #CE8892);
+}
+
+/* 모바일 미세 조정 */
+@media (max-width:480px){
+  .sameprice-section .treat-tags .tag{
+    font-size:.74rem; padding:.2rem .4rem;
+  }
+  .sameprice-section .clinic-tags .tag{
+    gap:.2rem;
+  }
+}

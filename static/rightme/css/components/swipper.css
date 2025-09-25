@@ -1,0 +1,161 @@
+/* =====================================
+   Main page - Hero Swiper (FULL SOURCE)
+   ===================================== */
+
+/* --- 안전 장치: 라이브러리 CSS 누락 대비 --- */
+.hero .swiper { position: relative; overflow: hidden; }
+.hero .swiper-wrapper { display: flex; width: 100%; }
+.hero .swiper-slide { flex-shrink: 0; width: 100%; }
+
+/* --- 공통 레이아웃/카드감 --- */
+.hero .swiper,
+.hero .swiper-slide picture,
+.hero .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hero .swiper {
+  border-radius: var(--radius, 16px);
+  box-shadow: var(--shadow, 0 6px 24px rgba(0,0,0,.06));
+  background: var(--card, #fff);
+}
+
+/* ================================
+   네비게이션 버튼 (이전 캐러셀 스타일)
+   - 어두운 반투명 배경
+   - 흰색 화살표 (data-URI 단일 라인)
+   - hover 시 더 진하게
+   ================================ */
+.hero .swiper-button-prev,
+.hero .swiper-button-next{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(10,10,10,.2);
+  color: #fff;
+  display: grid; place-items: center;
+  line-height: 1;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    box-shadow .18s ease,
+    border-color .18s ease,
+    opacity .18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.hero .swiper-button-prev{ left: 12px; }
+.hero .swiper-button-next{ right: 12px; }
+
+/* 커스텀 아이콘 (흰색) — URL 인코딩, 줄바꿈 없음 */
+.hero .swiper-button-prev::after,
+.hero .swiper-button-next::after{
+  content: "";
+  display: block;
+  width: 18px; height: 18px;
+  margin: auto;
+  background-color: #ffffff; /* 화살표 색 */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath fill=%27currentColor%27 d=%27M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z%27/%3E%3C/svg%3E") center/contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath fill=%27currentColor%27 d=%27M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z%27/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.hero .swiper-button-next::after{ transform: scaleX(-1); }
+
+/* Hover / Active / Focus (캐러셀 스타일 매칭) */
+.hero .swiper-button-prev:hover,
+.hero .swiper-button-next:hover{
+  background: rgba(10,10,10,.4);
+  transform: translateY(-50%) translateY(-1px);
+  border-color: rgba(255,255,255,.55);
+}
+.hero .swiper-button-prev:active,
+.hero .swiper-button-next:active{
+  transform: translateY(-50%);
+}
+.hero .swiper-button-prev:focus-visible,
+.hero .swiper-button-next:focus-visible{
+  box-shadow: 0 0 0 3px rgba(206,136,146,.35), 0 8px 24px rgba(0,0,0,.25);
+  outline: none;
+}
+.hero .swiper-button-disabled{
+  opacity: .45;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* --- 도트 --- */
+.hero .swiper-pagination-bullet {
+  width: 5px; height: 5px;
+  background: #ccc;
+  opacity: .6;
+  border-radius: 999px;
+  transition: width .18s ease, opacity .18s ease, background .18s ease;
+}
+.hero .swiper-pagination-bullet-active {
+  width: 12px;
+  background: var(--primary, #CE8892);
+  opacity: 1;
+}
+
+/* --- 태블릿 높이/이미지 채움 --- */
+@media (max-width: 1024px) {
+  .hero .swiper { height: clamp(180px, 28vw, 260px); }
+  .hero .swiper-wrapper,
+  .hero .swiper-slide,
+  .hero .swiper-slide picture,
+  .hero .swiper-slide img { height: 100%; }
+  .hero .swiper-slide img{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+/* --- 모바일 높이/이미지 채움 & 화살표 숨김 --- */
+@media (max-width: 640px) {
+  .hero { margin-top: .5rem; }
+  .hero .swiper { height: clamp(180px, 48vw, 240px); } /* 모바일 최종 값 */
+  .hero .swiper-wrapper,
+  .hero .swiper-slide,
+  .hero .swiper-slide picture,
+  .hero .swiper-slide img { height: 100%; }
+  .hero .swiper-slide img{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .hero .swiper-button-prev,
+  .hero .swiper-button-next{ display: none !important; }
+
+  .hero .swiper-pagination-bullet { width: 5px; height: 5px; }
+  .hero .swiper-pagination-bullet-active { width: 12px; }
+}
+
+/* --- 중간 화면(태블릿) 도트 조금 크게 --- */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero .swiper-pagination-bullet { width: 6px; height: 6px; }
+  .hero .swiper-pagination-bullet-active { width: 14px; }
+}
+
+/* Fallback: -webkit-mask/mask 미지원 시 경계선 화살표 사용 */
+@supports not (-webkit-mask: url("")) and not (mask: url("")) {
+  .hero .swiper-button-prev::after,
+  .hero .swiper-button-next::after{
+    content:"";
+    width: 12px; height: 12px;
+    background: none;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    margin: auto;
+  }
+  /* ← */
+  .hero .swiper-button-prev::after{ transform: rotate(135deg); }
+  /* → */
+  .hero .swiper-button-next::after{ transform: rotate(-45deg); }
+}

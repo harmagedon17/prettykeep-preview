@@ -1,0 +1,139 @@
+/* =====================================
+   Doctors (의사) 전용 스타일
+   - 카드/그리드/태그/별점/프로필
+   - 다른 페이지 스타일과 충돌 없도록 범위 지정
+   ===================================== */
+
+/* 섹션 래퍼(선택) */
+.doctor-section { padding: 0 0 3rem; }
+
+/* =========================
+   GRID
+   ========================= */
+#doctorGrid,
+.doctor-section .doctor-grid,
+section.container .doctor-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1200px){
+  #doctorGrid, .doctor-section .doctor-grid, section.container .doctor-grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px){
+  #doctorGrid, .doctor-section .doctor-grid, section.container .doctor-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px){
+  #doctorGrid, .doctor-section .doctor-grid, section.container .doctor-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   CARD
+   ========================= */
+.doctor-card{
+  display: flex; flex-direction: column;
+  height: auto; overflow: visible;
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  text-align: center; background: var(--card, #fff);
+}
+
+/* 프로필 이미지 (원형) */
+.doctor-card > img{
+  margin: 0 auto; display: block;
+  width: clamp(90px, 18vw, 120px);
+  aspect-ratio: 1 / 1; object-fit: cover;
+  border-radius: 50%;
+}
+
+/* 이름 / 카테고리(조금 더 굵게) */
+.doc-name{
+  margin: .5rem 0 0;
+  font-size: 1rem; font-weight: 700;
+}
+.doc-title{
+  margin: .15rem 0 .25rem;
+  color: var(--muted, #6b7280);
+  font-weight: 700;         /* 요청: 카테고리 굵게 */
+  font-size: .95rem;
+}
+
+/* 기본 메타 (병원명/별점/프로필 줄) */
+.doc-meta{
+  list-style: none; margin:.25rem 0 0; padding:0;
+  color: var(--muted, #6b7280);
+  font-size: .85rem; line-height: 1.4;
+  display: grid; gap: .15rem;
+}
+
+/* 별점 표시 (있을 때만) */
+.doc-meta .rating{
+  display: inline-flex; align-items: center; justify-content: center; gap: .25rem;
+}
+.doc-meta .rating .star-icon{ width: 14px; height: 14px; display:block; }
+.doc-meta .rating .score{ color: var(--text, #2a2a2a); font-weight: 700; }
+.doc-meta .rating .count{ color: var(--muted, #6b7280); }
+
+/* =========================
+   잘하는 항목(Items) 태그
+   - 텍스트에 색상 + 굵게
+   - 네모 박스(라운드 없음)
+   ========================= */
+.doc-tags{
+  display: flex; flex-wrap: wrap; gap: .4rem;
+  margin: .6rem 0 .25rem; justify-content: center;
+  padding: 0 .5rem;
+}
+.doc-tags span{
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: .18rem .35rem;
+  font-size: .78rem; line-height: 1;
+  border: 1px solid var(--border, #e5e7eb);
+  background: #fff;
+  /* 라운드 없이 네모 박스 느낌 */
+  border-radius: 0;
+}
+.doc-tags span strong{
+  color: var(--primary, #CE8892);
+  font-weight: 800;         /* 요청: 굵게 */
+}
+
+/* =========================
+   하단 화살표 링크
+   ========================= */
+.doc-footer{
+  display: flex; justify-content: flex-end; margin-top: auto;
+}
+.doc-arrow{
+  font-size: 1.5rem; color: var(--primary, #CE8892);
+  text-decoration: none; transition: transform .2s ease;
+}
+.doc-arrow:hover{ transform: translateX(2px); }
+
+/* =========================
+   스켈레톤(옵션)
+   ========================= */
+.doctor-card[aria-hidden="true"]{ opacity: .65; }
+
+/* =========================
+   반응형 미세 조정
+   ========================= */
+@media (min-width: 1200px){
+  .doctor-card > img{ width: 140px; }
+}
+@media (max-width: 768px){
+  .doc-tags{ gap: .35rem; }
+  .doc-tags span{ font-size: .76rem; }
+}
+@media (max-width: 480px){
+  .doctor-card > img{ width: clamp(84px, 26vw, 110px); }
+  .doc-tags{ padding: 0 .25rem; }
+}

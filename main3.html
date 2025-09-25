@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pretty keep</title>
+  <link rel="stylesheet" href="/static/rightme/font/pretendard/pretendard.css">
+  <link rel="preload" as="font" href="/static/rightme/font/pretendard/Pretendard-Regular.woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./static/rightme/css/styles.css" />
+  <link rel="stylesheet" href="./static/rightme/css/components/lang.css" />
+  <link rel="stylesheet" href="./static/rightme/css/components/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="./static/rightme/css/components/swipper.css" />
+  <link rel="stylesheet" href="./static/rightme/css/components/main-event3.css" />
+  <link rel="stylesheet" href="./static/rightme/css/components/main-sameprice.css">
+  <link rel="stylesheet" href="./static/rightme/css/components/main-doctors.css" />
+  <link rel="stylesheet" href="./static/rightme/css/components/tabbar.css" />
+  <link rel="stylesheet" href="./static/rightme/css/components/floating-messengers.css" />
+</head>
+<body data-tab="home"> 
+  <header class="site-header container">
+    <div class="brand">
+      <a href="#">
+        <picture>
+        <!-- 1024px 이하일 때 logo3.jpg 사용 -->
+        <source srcset="./static/assets/logo3.jpg" media="(max-width: 1024px)">
+        <!-- 기본은 logo1.jpg -->
+        <img src="./static/assets/logo1.jpg" alt="Pretty Keep" class="logo"/>
+        </picture>
+      </a>
+    </div>
+    <nav class="quick">
+      <a href="#" class="link" data-i18n="auth.register">注册</a>
+      <a href="#" class="link" data-i18n="auth.login">登录</a>
+      <button class="btn ghost" type="button" id="langBtn" aria-haspopup="menu" aria-expanded="false">
+        <span class="langbtn-label" data-i18n="header.language">Language</span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- HERO / BANNER (FULL, Swiper) -->
+    <section class="hero container">
+      <div class="swiper hero-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <a href="">
+              <picture>
+                <!-- 모바일용 경로는 반드시 절대경로로 -->
+                <source media="(max-width: 480px)" srcset="./static/assets/banner1_m.jpg" sizes="100vw">
+                <img src="./static/assets/banner1.jpg" alt="Hero1" loading="eager" fetchpriority="high">
+              </picture>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="">
+              <picture>
+                <source media="(max-width: 480px)" srcset="/static/assets/banner2_m.jpg" sizes="100vw">
+                <img src="./static/assets/banner2.jpg" alt="Hero2" loading="lazy">
+              </picture>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="">
+              <picture>
+                <source media="(max-width: 480px)" srcset="/static/assets/banner3_m.jpg" sizes="100vw">
+                <img src="./static/assets/banner3.jpg" alt="Hero3" loading="lazy">
+              </picture>
+            </a>
+          </div>
+        </div>
+
+        <!-- 네비/도트 -->
+        <div class="swiper-button-prev" aria-label="Previous"></div>
+        <div class="swiper-button-next" aria-label="Next"></div>
+        <div class="swiper-pagination" role="tablist"></div>
+      </div>
+    </section>
+    <form class="search" role="search" aria-label="site">
+      <!-- 장식용 아이콘 -->
+      <span class="search-icon"><img src="./static/assets/search.png" alt="search"></span>
+      <input type="search" data-i18n-placeholder="search.placeholder" placeholder="输入您的搜索词..." />
+      <!-- submit 버튼 제거 (기능 없으므로) -->
+    </form>
+
+    <!-- ICONS: 8 -->
+    <section class="container icons">
+      <ul class="icon-grid">
+        <li><a href="/" class="icon-btn"><img src="./static/assets/ico1.jpg" alt=""><span data-i18n="icon.sameprice">中韩同价</span></a></li>
+        <li><a href="/" class="icon-btn"><img src="./static/assets/ico2.jpg" alt=""><span data-i18n="icon.byPrice">按价格</span></a></li>
+        <li><a href="/" class="icon-btn"><img src="./static/assets/ico3.jpg" alt=""><span data-i18n="icon.byHospital">按医院</span></a></li>
+        <li><a href="/" class="icon-btn"><img src="./static/assets/ico4.jpg"><span data-i18n="icon.byProcedure">按项目</span></a></li>
+        <li><a href="/" class="icon-btn"><img src="./static/assets/ico5.jpg"><span data-i18n="icon.byDoctor">按医生</span></a></li>
+        <li><a href="/" class="icon-btn"><img src="./static/assets/ico6.jpg"><span data-i18n="icon.byRegion">按地区</span></a></li>
+        <li><a href="/" class="icon-btn"><img src="./static/assets/ico7.jpg"><span data-i18n="icon.beauty">美妆</span></a></li>
+        <li><a href="/" class="icon-btn"><img src="./static/assets/ico8.jpg"><span data-i18n="icon.community">资讯社区</span></a></li>
+      </ul>
+      <div id="pk-subbar" class="pk-subbar" aria-hidden="true"></div>
+    </section>
+
+
+
+    <!-- DEALS -->
+    <section class="container section">
+      <div class="section-head">
+        <h3 data-i18n="section.deals">特别优惠</h3>
+        <a href="#" class="more" data-i18n="common.more">more ></a>
+      </div>
+      <!-- 여기로 데이터를 주입합니다 -->
+      <div class="card-grid" id="eventsGrid"></div>
+    </section>
+    <!-- Logos -->
+    <section class="container section sameprice-section">
+      <div class="section-head">
+        <h3 data-i18n="section.sameprice">中韩同价</h3>
+        <a href="#" class="more" data-i18n="common.more">more ></a>
+      </div>
+      <!-- 여기 id 추가! -->
+      <div class="card-grid" id="samepriceGrid"></div>  
+    </section>
+
+    <!-- Doctors -->
+    <section class="container section doctors-section">
+      <div class="section-head">
+        <h3 data-i18n="section.doctors">의사</h3>
+        <a href="/doctors" class="more" data-i18n="common.more">more ></a>
+      </div>
+      <div class="doctor-grid" id="doctorsGrid" aria-live="polite"></div>
+    </section>
+  </main>
+ 
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-top">
+        <a href="/" class="logo small">
+          <img src="./static/assets/logo2.jpg" alt="" />
+        </a>
+      </div>
+      <div class="foot-body">
+        <p>회사명 : 라미타코리아 <span class="sep">·</span> 사업자등록번호 : 407-15-08226</p>
+        <p>주소 : 서울 송파구 위례서로 252 유원플러스 1층 116호</p>
+        <p>Tel : <a href="tel:+827088499999">+82-070-8849-9999</a></p>
+        <p>Email : <a href="mailto:ramita.corea@gmail.com">ramita.corea@gmail.com</a></p> 
+        <p>대표자 : Han Dan</p>
+        <p>© 2024 Rightme. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>  
+  <script src="./static/rightme/js/script.js"></script>
+  <script src="./static/rightme/js/modules/swiper-bundle.min.js"></script>
+  <script src="./static/rightme/js/modules/swipper.js"></script>  
+  <script src="./static/rightme/js/modules/pk-subbar.js" defer></script>
+  <script type="module" src="./static/rightme/js/modules/i18n.js"></script>
+  <script type="module">    
+    import { initI18n } from '/static/rightme/js/modules/i18n.js';
+    import { initLang } from '/static/rightme/js/modules/lang.js';   
+    initLang();    
+    initI18n();
+  </script>
+  <script src="./static/rightme/js/modules/main3-events.js"></script>
+  <script src="./static/rightme/js/modules/main-sameprice.js" defer></script>
+  <script type="module" src="./static/rightme/js/modules/main3-doctors.js"></script>  
+  <script type="module" src="./static/rightme/js/modules/floating-messengers.js"></script>
+  <script type="module" src="./static/rightme/js/modules/tabbar.js"></script>
+</body>
+</html>

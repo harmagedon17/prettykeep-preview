@@ -1,0 +1,95 @@
+:root{
+  --pk-primary:#CE8892;
+  --pk-tabbar-bg:#FAF4F4;
+  --pk-tabbar-shadow:0 10px 26px rgba(0,0,0,.12);
+  --pk-label:#565656;
+}
+
+/* 컨테이너 */
+.pk-tabbar{
+  position:fixed;
+  left:50%;
+  bottom:calc(18px + env(safe-area-inset-bottom, 0));
+  transform:translateX(-50%);
+  z-index:1000;
+  width:min(420px, 92vw);            /* 원본처럼 길지 않게 */
+  background:var(--pk-tabbar-bg);
+  border-radius:999px;
+  box-shadow:var(--pk-tabbar-shadow);
+  padding:12px 14px;                 /* 패딩 얇게(원본 느낌) */
+}
+
+/* 5개 탭을 최대한 붙여서 중앙 정렬 */
+.pk-tablist{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:max-content;     /* 탭 너비만큼만 차지 */
+  justify-content:center;
+  align-items:end;
+  column-gap:12px;                   /* 간격을 최대한 좁힘 */
+}
+
+/* 기본 탭 */
+.pk-tab{
+  position:relative;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:flex-end;
+  min-width:62px;
+  text-decoration:none;
+  color:inherit;
+  -webkit-tap-highlight-color:transparent;
+}
+.pk-tab .icon{ width:26px; height:auto; display:block; opacity:.85; }
+.pk-tab .label{
+  margin-top:6px;
+  font-size:.78rem;
+  font-weight:700;                   /* 굵기 원본에 맞춤 */
+  color:var(--pk-label);
+}
+.pk-tab:focus-visible{ outline:2px solid rgba(206,136,146,.35); outline-offset:4px; border-radius:10px; }
+
+/* 활성 라벨만 포인트 컬러 */
+.pk-tab.active .label{ color:var(--pk-primary); }
+
+/* 중앙 FAB(예약) — 더 위로! */
+.pk-tab--reserve{
+  padding-top:20px;                  /* 라벨과 FAB 간격 조정 */
+}
+.pk-tab--reserve .pk-fab{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%) translateY(-30px); /* ↑ 더 위로 올림 */
+  top:0;
+  width:56px; height:56px;           /* 원형 크기 */
+  background:var(--pk-primary);
+  border-radius:50%;
+  box-shadow:0 8px 18px rgba(206,136,146,.35);
+  display:grid; place-items:center;
+  z-index:2;
+}
+.pk-tab--reserve .pk-fab .icon{
+  width:24px; height:auto;
+  filter:brightness(0) invert(1);    /* 흰색 아이콘 */
+  opacity:1;
+}
+
+/* 안전영역 */
+@supports(padding:max(0px)){
+  .pk-tabbar{
+    padding-left:max(14px, env(safe-area-inset-left));
+    padding-right:max(14px, env(safe-area-inset-right));
+  }
+}
+
+/* 모바일 살짝 더 타이트 */
+@media (max-width:480px){
+  .pk-tabbar{ width:min(380px, 92vw); padding:10px 12px; }
+  .pk-tablist{ column-gap:10px; }
+  .pk-tab{ min-width:58px; }
+  .pk-tab .icon{ width:24px; }
+  .pk-tab .label{ font-size:.72rem; }
+  .pk-tab--reserve .pk-fab{
+    width:54px; height:54px;
+    transform:translateX(-50%) translateY(-32px); /* 모바일에서 조금 더 위 */
+  }
+}
